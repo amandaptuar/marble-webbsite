@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { productsData } from '../data/productsData';
@@ -6,6 +7,19 @@ const WA_NUMBER = '919680333942';
 const waLink = (msg) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
 
 function Products() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 10;
+  
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = productsData.slice(indexOfFirstProduct, indexOfLastProduct);
+  const totalPages = Math.ceil(productsData.length / productsPerPage);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const productSchemas = [
     {
       "@context": "https://schema.org",
@@ -70,7 +84,7 @@ function Products() {
         <div className="container">
           <div className="product-grid">
 
-            {productsData.map((product) => (
+            {currentProducts.map((product) => (
               <article key={product.id} className="product-card">
                 <img src={product.image} alt={product.name} className="product-img" loading="lazy" />
                 <div className="product-body" style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
@@ -97,6 +111,61 @@ function Products() {
             ))}
 
           </div>
+
+          {totalPages > 1 && (
+            <div className="pagination" style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '40px', flexWrap: 'wrap', alignItems: 'center' }}>
+              <button 
+                onClick={() => paginate(currentPage - 1)} 
+                disabled={currentPage === 1}
+                className="btn btn-outline"
+                style={{ padding: '8px 16px', border: '1px solid #d9a84e', background: currentPage === 1 ? '#f0f0f0' : 'transparent', color: currentPage === 1 ? '#a0a0a0' : '#d9a84e', cursor: currentPage === 1 ? 'not-allowed' : 'pointer' }}
+              >
+                Previous
+              </button>
+              
+              {[...Array(totalPages)].map((_, index) => {
+                const pageNum = index + 1;
+                if (
+                  pageNum === 1 || 
+                  pageNum === totalPages || 
+                  (pageNum >= currentPage - 1 && pageNum <= currentPage + 1)
+                ) {
+                  return (
+                    <button
+                      key={pageNum}
+                      onClick={() => paginate(pageNum)}
+                      className="btn"
+                      style={{
+                        padding: '8px 16px',
+                        background: currentPage === pageNum ? '#d9a84e' : 'transparent',
+                        color: currentPage === pageNum ? '#0e1b2c' : '#d9a84e',
+                        border: '1px solid #d9a84e',
+                        minWidth: '40px',
+                        justifyContent: 'center'
+                      }}
+                    >
+                      {pageNum}
+                    </button>
+                  );
+                } else if (
+                  (pageNum === 2 && currentPage > 3) ||
+                  (pageNum === totalPages - 1 && currentPage < totalPages - 2)
+                ) {
+                  return <span key={pageNum} style={{ padding: '8px', color: '#6b7280' }}>...</span>;
+                }
+                return null;
+              })}
+
+              <button 
+                onClick={() => paginate(currentPage + 1)} 
+                disabled={currentPage === totalPages}
+                className="btn btn-outline"
+                style={{ padding: '8px 16px', border: '1px solid #d9a84e', background: currentPage === totalPages ? '#f0f0f0' : 'transparent', color: currentPage === totalPages ? '#a0a0a0' : '#d9a84e', cursor: currentPage === totalPages ? 'not-allowed' : 'pointer' }}
+              >
+                Next
+              </button>
+            </div>
+          )}
 
           <div className="no-products-note">
             <p>More products coming soon! For custom orders or any marble requirements, feel free to reach out directly.</p>
