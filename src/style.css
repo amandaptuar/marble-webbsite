@@ -291,6 +291,8 @@ ul{ list-style:none; margin:0; padding:0; }
 .price{ color: var(--gold-dark); font-weight:700; font-size:1.05rem; margin-bottom: 6px; }
 .wa-enquiry-btn{ background: #25D366; color: #fff; gap: 8px; }
 .wa-enquiry-btn:hover{ background: #1ebe5e; color: #fff; }
+.call-enquiry-btn{ background: var(--navy); color: #fff; gap: 8px; }
+.call-enquiry-btn:hover{ background: var(--navy-2); color: #fff; }
 
 /* ============ No products note ============ */
 .no-products-note{

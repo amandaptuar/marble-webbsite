@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
+import { productsData } from '../data/productsData';
 
 const WA_NUMBER = '919680333942';
 const waLink = (msg) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
@@ -69,22 +70,31 @@ function Products() {
         <div className="container">
           <div className="product-grid">
 
-            <article className="product-card">
-              <img src="/washbasin.png" alt="Marble Washbasin" className="product-img" loading="lazy" />
-              <div className="product-body">
-                <h4>Marble Washbasin</h4>
-                <div className="price">Contact for Price</div>
-                <a
-                  href={waLink('Hi, I am interested in your Marble Washbasin. Please share more details and pricing.')}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-sm wa-enquiry-btn"
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17 14.4c-.3-.1-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.2.2-.3.2-.5.1-.3-.1-1.2-.4-2.2-1.4-.8-.7-1.4-1.6-1.5-1.9-.2-.3 0-.4.1-.6l.4-.5c.1-.1.2-.3.2-.4.1-.2 0-.3 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.5 1.1 2.7c.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.6-.7 1.9-1.3.2-.6.2-1.1.1-1.3-.1-.1-.2-.2-.4-.3Z"/><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/></svg>
-                  WhatsApp Enquiry
-                </a>
-              </div>
-            </article>
+            {productsData.map((product) => (
+              <article key={product.id} className="product-card">
+                <img src={product.image} alt={product.name} className="product-img" loading="lazy" />
+                <div className="product-body" style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+                  <a
+                    href={`tel:+${WA_NUMBER}`}
+                    className="btn btn-sm call-enquiry-btn"
+                    style={{ flex: 1, textAlign: 'center', justifyContent: 'center' }}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    Call
+                  </a>
+                  <a
+                    href={waLink(`Hi, I am interested in this product: https://rbmarblemakrana.shop${product.image}. Please share more details and pricing.`)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-sm wa-enquiry-btn"
+                    style={{ flex: 1, textAlign: 'center', justifyContent: 'center' }}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17 14.4c-.3-.1-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.2.2-.3.2-.5.1-.3-.1-1.2-.4-2.2-1.4-.8-.7-1.4-1.6-1.5-1.9-.2-.3 0-.4.1-.6l.4-.5c.1-.1.2-.3.2-.4.1-.2 0-.3 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.5 1.1 2.7c.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.6-.7 1.9-1.3.2-.6.2-1.1.1-1.3-.1-.1-.2-.2-.4-.3Z"/><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/></svg>
+                    WhatsApp
+                  </a>
+                </div>
+              </article>
+            ))}
 
           </div>
 
