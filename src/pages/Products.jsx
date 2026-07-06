@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useMemo } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { productsData } from '../data/productsData';
 
@@ -8,16 +8,43 @@ const waLink = (msg) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(ms
 
 function Products() {
   const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 10;
-  
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const navigate = useNavigate();
+
+  const productsPerPage = 12; // Adjusted for a better grid
+
+  const categories = useMemo(() => {
+    const cats = new Set(productsData.map(p => p.category));
+    return ['All', ...Array.from(cats)];
+  }, []);
+
+  const filteredProducts = useMemo(() => {
+    if (selectedCategory === 'All') return productsData;
+    return productsData.filter(p => p.category === selectedCategory);
+  }, [selectedCategory]);
+
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = productsData.slice(indexOfFirstProduct, indexOfLastProduct);
-  const totalPages = Math.ceil(productsData.length / productsPerPage);
+  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Smooth scroll to product grid top
+    const gridEl = document.getElementById('product-grid-section');
+    if (gridEl) {
+      const y = gridEl.getBoundingClientRect().top + window.scrollY - 100;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+    setCurrentPage(1);
+  };
+
+  const handleProductClick = (id) => {
+    navigate(`/product/${id}`);
   };
 
   const productSchemas = [
@@ -46,23 +73,6 @@ function Products() {
           "item": "https://rbmarblemakrana.shop/products"
         }
       ]
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      "name": "Marble Washbasin",
-      "image": "https://rbmarblemakrana.shop/washbasin.png",
-      "description": "Premium quality Makrana Marble Washbasin.",
-      "brand": {
-        "@type": "Brand",
-        "name": "RB Marble Makrana"
-      },
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "INR",
-        "price": "Contact for Price",
-        "availability": "https://schema.org/InStock"
-      }
     }
   ];
 
@@ -80,37 +90,94 @@ function Products() {
         <p className="crumb"><Link to="/">Home</Link><span className="sep">›</span>Products</p>
       </section>
 
-      <section className="products-section">
+      {/* Category Listing Section */}
+      <section className="category-filter-section" style={{ padding: '60px 0 20px', backgroundColor: '#f9f9f9' }}>
         <div className="container">
-          <div className="product-grid">
-
-            {currentProducts.map((product) => (
-              <article key={product.id} className="product-card">
-                <img src={product.image} alt={product.name} className="product-img" loading="lazy" />
-                <div className="product-body" style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
-                  <a
-                    href={`tel:+${WA_NUMBER}`}
-                    className="btn btn-sm call-enquiry-btn"
-                    style={{ flex: 1, textAlign: 'center', justifyContent: 'center' }}
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                    Call
-                  </a>
-                  <a
-                    href={waLink(`Hi, I am interested in this product: https://rbmarblemakrana.shop${product.image}. Please share more details and pricing.`)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-sm wa-enquiry-btn"
-                    style={{ flex: 1, textAlign: 'center', justifyContent: 'center' }}
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17 14.4c-.3-.1-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.2.2-.3.2-.5.1-.3-.1-1.2-.4-2.2-1.4-.8-.7-1.4-1.6-1.5-1.9-.2-.3 0-.4.1-.6l.4-.5c.1-.1.2-.3.2-.4.1-.2 0-.3 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.5 1.1 2.7c.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.6-.7 1.9-1.3.2-.6.2-1.1.1-1.3-.1-.1-.2-.2-.4-.3Z"/><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/></svg>
-                    WhatsApp
-                  </a>
-                </div>
-              </article>
-            ))}
-
+          <div className="section-header text-center" style={{ marginBottom: '30px' }}>
+            <h2 style={{ fontSize: '2rem', color: '#0e1b2c', marginBottom: '10px' }}>Shop by Category</h2>
+            <p style={{ color: '#6b7280' }}>Explore our premium collections tailored to your needs</p>
           </div>
+          <div className="category-chips" style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', justifyContent: 'center' }}>
+            {categories.map(cat => (
+              <button
+                key={cat}
+                onClick={() => handleCategorySelect(cat)}
+                className={`btn category-chip ${selectedCategory === cat ? 'active' : ''}`}
+                style={{
+                  padding: '10px 20px',
+                  borderRadius: '30px',
+                  border: '1px solid #d9a84e',
+                  backgroundColor: selectedCategory === cat ? '#d9a84e' : 'transparent',
+                  color: selectedCategory === cat ? '#fff' : '#d9a84e',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  fontWeight: '500'
+                }}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="product-grid-section" className="products-section" style={{ paddingTop: '40px' }}>
+        <div className="container">
+          {filteredProducts.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '40px' }}>
+              <h3>No products found in this category.</h3>
+              <button className="btn" style={{ marginTop: '20px' }} onClick={() => handleCategorySelect('All')}>View All Products</button>
+            </div>
+          ) : (
+            <div className="product-grid">
+              {currentProducts.map((product) => (
+                <article 
+                  key={product.id} 
+                  className="product-card" 
+                  style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', height: '100%', transition: 'transform 0.3s ease, box-shadow 0.3s ease' }}
+                  onClick={() => handleProductClick(product.id)}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
+                >
+                  <div style={{ position: 'relative', width: '100%', paddingTop: '100%', overflow: 'hidden' }}>
+                    <img 
+                      src={product.image} 
+                      alt={product.name} 
+                      loading="lazy"
+                      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  </div>
+                  <div className="product-body" style={{ display: 'flex', flexDirection: 'column', padding: '16px', flexGrow: 1 }}>
+                    <span style={{ fontSize: '0.8rem', color: '#d9a84e', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>{product.category}</span>
+                    <h3 style={{ fontSize: '1.1rem', marginBottom: '12px', flexGrow: 1, color: '#0e1b2c' }}>{product.name}</h3>
+                    
+                    <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: 'auto' }}>
+                      <a
+                        href={`tel:+${WA_NUMBER}`}
+                        className="btn btn-sm call-enquiry-btn"
+                        style={{ flex: 1, textAlign: 'center', justifyContent: 'center' }}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        Call
+                      </a>
+                      <a
+                        href={waLink(`Hi, I am interested in this product: https://rbmarblemakrana.shop/product/${product.id}. Please share more details and pricing.`)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-sm wa-enquiry-btn"
+                        style={{ flex: 1, textAlign: 'center', justifyContent: 'center' }}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17 14.4c-.3-.1-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.2.2-.3.2-.5.1-.3-.1-1.2-.4-2.2-1.4-.8-.7-1.4-1.6-1.5-1.9-.2-.3 0-.4.1-.6l.4-.5c.1-.1.2-.3.2-.4.1-.2 0-.3 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.5 1.1 2.7c.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.6-.7 1.9-1.3.2-.6.2-1.1.1-1.3-.1-.1-.2-.2-.4-.3Z"/><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/></svg>
+                        WhatsApp
+                      </a>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
 
           {totalPages > 1 && (
             <div className="pagination" style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '40px', flexWrap: 'wrap', alignItems: 'center' }}>
@@ -138,7 +205,7 @@ function Products() {
                       style={{
                         padding: '8px 16px',
                         background: currentPage === pageNum ? '#d9a84e' : 'transparent',
-                        color: currentPage === pageNum ? '#0e1b2c' : '#d9a84e',
+                        color: currentPage === pageNum ? '#fff' : '#d9a84e',
                         border: '1px solid #d9a84e',
                         minWidth: '40px',
                         justifyContent: 'center'
@@ -167,7 +234,7 @@ function Products() {
             </div>
           )}
 
-          <div className="no-products-note">
+          <div className="no-products-note" style={{ marginTop: '60px' }}>
             <p>More products coming soon! For custom orders or any marble requirements, feel free to reach out directly.</p>
             <a
               href={waLink('Hi, I am looking for marble products. Please help me with details.')}

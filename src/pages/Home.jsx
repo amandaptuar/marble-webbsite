@@ -157,34 +157,50 @@ function Home() {
           <div className="cat-grid">
             <div className="cat-card">
               <div className="cat-img-wrap">
-                <img src="/temple-category.png" alt="Marble Temples" className="cat-img" loading="lazy" />
+                <img src="/cat1.png" alt="Marble Temples" className="cat-img" loading="lazy" />
                 <div className="cat-overlay"><Link to="/products" className="cat-btn">View Products</Link></div>
               </div>
-              <h4>Marble Temples</h4>
             </div>
             <div className="cat-card">
               <div className="cat-img-wrap">
-                <img src="/qibla-category.png" alt="Qibla Work" className="cat-img" loading="lazy" />
+                <img src="/cat2.png" alt="Qibla Work" className="cat-img" loading="lazy" />
                 <div className="cat-overlay"><Link to="/products" className="cat-btn">View Products</Link></div>
               </div>
-              <h4>Qibla Work</h4>
             </div>
             <div className="cat-card">
               <div className="cat-img-wrap">
-                <img src="/third-category.png" alt="Fountains" className="cat-img" loading="lazy" />
+                <img src="/cat3.png" alt="Fountains" className="cat-img" loading="lazy" />
                 <div className="cat-overlay"><Link to="/products" className="cat-btn">View Products</Link></div>
               </div>
-              <h4>Fountains</h4>
             </div>
             <div className="cat-card">
               <div className="cat-img-wrap">
-                <img src="/tulsi-category.png" alt="Tulsi Pots" className="cat-img" loading="lazy" />
+                <img src="/cat4.png" alt="Tulsi Pots" className="cat-img" loading="lazy" />
                 <div className="cat-overlay"><Link to="/products" className="cat-btn">View Products</Link></div>
               </div>
-              <h4>Tulsi Pots</h4>
             </div>
           </div>
           <div className="cat-more"><Link to="/products" className="btn">View All Products</Link></div>
+        </div>
+      </section>
+
+      {/* ── IMAGE GALLERY ── */}
+      <section className="image-gallery-section" style={{ padding: '20px 0 60px', backgroundColor: '#fff' }}>
+        <div className="container">
+          <div className="section-header">
+            <div className="section-title"><h2>Product Gallery</h2></div>
+            <p className="section-sub">A glimpse of our finest marble craftsmanship and premium products</p>
+          </div>
+          <div className="gallery-grid">
+            <div className="gallery-item"><img src="/products/0390305d-0ee0-41ce-84f1-673c53553638.jpg" alt="Gallery Image 1" loading="lazy" /></div>
+            <div className="gallery-item"><img src="/products/0c874724-625a-4a5b-b5b1-4a6d786ead9a.jpg" alt="Gallery Image 2" loading="lazy" /></div>
+            <div className="gallery-item"><img src="/products/1ca14a85-b3f4-45e9-a503-cb94b540088d.jpg" alt="Gallery Image 3" loading="lazy" /></div>
+            <div className="gallery-item"><img src="/products/4138aab6-86f2-4e08-9ed5-be51137c00c1.jpg" alt="Gallery Image 4" loading="lazy" /></div>
+            <div className="gallery-item"><img src="/products/6a59163f-d02f-413d-ad54-e465aa5a7e3a.jpg" alt="Gallery Image 5" loading="lazy" /></div>
+            <div className="gallery-item"><img src="/products/8da45616-3be6-44f3-9607-56b46ccd3116.jpg" alt="Gallery Image 6" loading="lazy" /></div>
+            <div className="gallery-item"><img src="/products/e7ce0ee8-419d-4715-90dd-793829b5cf4e.jpg" alt="Gallery Image 7" loading="lazy" /></div>
+            <div className="gallery-item"><img src="/products/ff634f39-1274-42f7-af65-88a0be8cf54a.jpg" alt="Gallery Image 8" loading="lazy" /></div>
+          </div>
         </div>
       </section>
 
