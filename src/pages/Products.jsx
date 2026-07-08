@@ -13,9 +13,16 @@ function Products() {
 
   const productsPerPage = 12; // Adjusted for a better grid
 
-  const categories = useMemo(() => {
-    const cats = new Set(productsData.map(p => p.category));
-    return ['All', ...Array.from(cats)];
+  const categoriesData = useMemo(() => {
+    const cats = new Set();
+    const result = [{ name: 'All', image: productsData.length > 0 ? productsData[0].image : '' }];
+    productsData.forEach(p => {
+      if (!cats.has(p.category)) {
+        cats.add(p.category);
+        result.push({ name: p.category, image: p.image });
+      }
+    });
+    return result;
   }, []);
 
   const filteredProducts = useMemo(() => {
@@ -91,31 +98,56 @@ function Products() {
       </section>
 
       {/* Category Listing Section */}
-      <section className="category-filter-section" style={{ padding: '60px 0 20px', backgroundColor: '#f9f9f9' }}>
+      <section className="category-filter-section" style={{ padding: '60px 0 40px', backgroundColor: '#f9f9f9' }}>
         <div className="container">
-          <div className="section-header text-center" style={{ marginBottom: '30px' }}>
+          <div className="section-header text-center" style={{ marginBottom: '40px' }}>
             <h2 style={{ fontSize: '2rem', color: '#0e1b2c', marginBottom: '10px' }}>Shop by Category</h2>
             <p style={{ color: '#6b7280' }}>Explore our premium collections tailored to your needs</p>
           </div>
-          <div className="category-chips" style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', justifyContent: 'center' }}>
-            {categories.map(cat => (
-              <button
-                key={cat}
-                onClick={() => handleCategorySelect(cat)}
-                className={`btn category-chip ${selectedCategory === cat ? 'active' : ''}`}
+          <div className="category-circles" style={{ display: 'flex', flexWrap: 'wrap', gap: '30px', justifyContent: 'center' }}>
+            {categoriesData.map(cat => (
+              <div 
+                key={cat.name}
+                onClick={() => handleCategorySelect(cat.name)}
                 style={{
-                  padding: '10px 20px',
-                  borderRadius: '30px',
-                  border: '1px solid #d9a84e',
-                  backgroundColor: selectedCategory === cat ? '#d9a84e' : 'transparent',
-                  color: selectedCategory === cat ? '#fff' : '#d9a84e',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
                   cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  fontWeight: '500'
+                  width: '120px'
                 }}
               >
-                {cat}
-              </button>
+                <div style={{
+                  width: '100px',
+                  height: '100px',
+                  borderRadius: '50%',
+                  overflow: 'hidden',
+                  border: selectedCategory === cat.name ? '4px solid #d9a84e' : '4px solid transparent',
+                  boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+                  transition: 'all 0.3s ease',
+                  marginBottom: '12px'
+                }}
+                onMouseEnter={(e) => {
+                    if(selectedCategory !== cat.name) e.currentTarget.style.border = '4px solid #e0c289';
+                    e.currentTarget.style.transform = 'scale(1.05)';
+                }}
+                onMouseLeave={(e) => {
+                    if(selectedCategory !== cat.name) e.currentTarget.style.border = '4px solid transparent';
+                    e.currentTarget.style.transform = 'scale(1)';
+                }}
+                >
+                  <img src={cat.image} alt={cat.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
+                <span style={{
+                  fontSize: '0.9rem',
+                  fontWeight: selectedCategory === cat.name ? '700' : '500',
+                  color: selectedCategory === cat.name ? '#d9a84e' : '#333',
+                  textAlign: 'center',
+                  transition: 'color 0.3s ease'
+                }}>
+                  {cat.name}
+                </span>
+              </div>
             ))}
           </div>
         </div>
