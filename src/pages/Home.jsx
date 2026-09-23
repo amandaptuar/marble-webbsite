@@ -158,27 +158,38 @@ function Home() {
           <div className="cat-grid">
             <div className="cat-card">
               <div className="cat-img-wrap">
-                <img src="/cat1.png" alt="Marble Temples" className="cat-img" loading="lazy" />
-                <div className="cat-overlay"><Link to="/products" className="cat-btn">View Products</Link></div>
+                <img src="/cat1.png" alt="Home Temple" className="cat-img" loading="lazy" />
+                <div className="cat-overlay"><Link to="/products?category=Home Temple" className="cat-btn">View Products</Link></div>
               </div>
+              <h4>Home Temple</h4>
             </div>
             <div className="cat-card">
               <div className="cat-img-wrap">
-                <img src="/cat2.png" alt="Qibla Work" className="cat-img" loading="lazy" />
-                <div className="cat-overlay"><Link to="/products" className="cat-btn">View Products</Link></div>
+                <img src="/products/inlay-work-1.png" alt="Inlay Work" className="cat-img" loading="lazy" />
+                <div className="cat-overlay"><Link to="/products?category=Inlay Work" className="cat-btn">View Products</Link></div>
               </div>
+              <h4>Inlay Work</h4>
             </div>
             <div className="cat-card">
               <div className="cat-img-wrap">
-                <img src="/cat3.png" alt="Fountains" className="cat-img" loading="lazy" />
-                <div className="cat-overlay"><Link to="/products" className="cat-btn">View Products</Link></div>
+                <img src="/cat3.png" alt="Outdoor Fountain" className="cat-img" loading="lazy" />
+                <div className="cat-overlay"><Link to="/products?category=Outdoor Fountain" className="cat-btn">View Products</Link></div>
               </div>
+              <h4>Outdoor Fountain</h4>
             </div>
             <div className="cat-card">
               <div className="cat-img-wrap">
-                <img src="/cat4.png" alt="Tulsi Pots" className="cat-img" loading="lazy" />
-                <div className="cat-overlay"><Link to="/products" className="cat-btn">View Products</Link></div>
+                <img src="/cat2.png" alt="Wall Fountain" className="cat-img" loading="lazy" />
+                <div className="cat-overlay"><Link to="/products?category=Wall Fountain" className="cat-btn">View Products</Link></div>
               </div>
+              <h4>Wall Fountain</h4>
+            </div>
+            <div className="cat-card">
+              <div className="cat-img-wrap">
+                <img src="/cat4.png" alt="Washbasin" className="cat-img" loading="lazy" />
+                <div className="cat-overlay"><Link to="/products?category=Washbasin" className="cat-btn">View Products</Link></div>
+              </div>
+              <h4>Washbasin</h4>
             </div>
           </div>
           <div className="cat-more"><Link to="/products" className="btn">View All Products</Link></div>

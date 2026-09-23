@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useMemo, useEffect } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { productsData } from '../data/productsData';
 
@@ -7,9 +7,19 @@ const WA_NUMBER = '919680333942';
 const waLink = (msg) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
 
 function Products() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const categoryParam = searchParams.get('category');
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedCategory, setSelectedCategory] = useState(categoryParam || 'All');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (categoryParam) {
+      setSelectedCategory(categoryParam);
+    } else {
+      setSelectedCategory('All');
+    }
+  }, [categoryParam]);
 
   const productsPerPage = 12; // Adjusted for a better grid
 
@@ -48,6 +58,11 @@ function Products() {
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
     setCurrentPage(1);
+    if (category === 'All') {
+      setSearchParams({});
+    } else {
+      setSearchParams({ category });
+    }
   };
 
   const handleProductClick = (id) => {

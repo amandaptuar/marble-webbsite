@@ -423,5 +423,85 @@ export const productsData = [
     "image": "/products/cat-washbasin-c96274ac.jpeg",
     "description": "Premium Washbasin carefully handcrafted from the finest quality marble.",
     "price": "Contact for Price"
+  },
+  {
+    "id": 54,
+    "name": "Exquisite Marble Inlay Work 1",
+    "category": "Inlay Work",
+    "image": "/products/inlay-work-1.png",
+    "description": "Exquisite handcrafted marble inlay work featuring intricate semi-precious stone craftsmanship.",
+    "price": "Contact for Price"
+  },
+  {
+    "id": 55,
+    "name": "Classic Marble Inlay Work 2",
+    "category": "Inlay Work",
+    "image": "/products/inlay-work-2.png",
+    "description": "Classic handcrafted marble inlay work featuring intricate semi-precious stone craftsmanship.",
+    "price": "Contact for Price"
+  },
+  {
+    "id": 56,
+    "name": "Luxury Marble Inlay Work 3",
+    "category": "Inlay Work",
+    "image": "/products/inlay-work-3.png",
+    "description": "Luxury handcrafted marble inlay work featuring intricate semi-precious stone craftsmanship.",
+    "price": "Contact for Price"
+  },
+  {
+    "id": 57,
+    "name": "Handcrafted Marble Inlay Work 4",
+    "category": "Inlay Work",
+    "image": "/products/inlay-work-4.png",
+    "description": "Handcrafted marble inlay work featuring intricate semi-precious stone craftsmanship.",
+    "price": "Contact for Price"
+  },
+  {
+    "id": 58,
+    "name": "Royal Marble Inlay Work 5",
+    "category": "Inlay Work",
+    "image": "/products/inlay-work-5.png",
+    "description": "Royal handcrafted marble inlay work featuring intricate semi-precious stone craftsmanship.",
+    "price": "Contact for Price"
+  },
+  {
+    "id": 59,
+    "name": "Designer Marble Inlay Work 6",
+    "category": "Inlay Work",
+    "image": "/products/inlay-work-6.png",
+    "description": "Designer handcrafted marble inlay work featuring intricate semi-precious stone craftsmanship.",
+    "price": "Contact for Price"
+  },
+  {
+    "id": 60,
+    "name": "Traditional Marble Inlay Work 7",
+    "category": "Inlay Work",
+    "image": "/products/inlay-work-7.png",
+    "description": "Traditional handcrafted marble inlay work featuring intricate semi-precious stone craftsmanship.",
+    "price": "Contact for Price"
+  },
+  {
+    "id": 61,
+    "name": "Custom Marble Inlay Work 8",
+    "category": "Inlay Work",
+    "image": "/products/inlay-work-8.png",
+    "description": "Custom handcrafted marble inlay work featuring intricate semi-precious stone craftsmanship.",
+    "price": "Contact for Price"
+  },
+  {
+    "id": 62,
+    "name": "Premium Marble Inlay Work 9",
+    "category": "Inlay Work",
+    "image": "/products/inlay-work-9.png",
+    "description": "Premium handcrafted marble inlay work featuring intricate semi-precious stone craftsmanship.",
+    "price": "Contact for Price"
+  },
+  {
+    "id": 63,
+    "name": "Floral Marble Inlay Work 10",
+    "category": "Inlay Work",
+    "image": "/products/inlay-work-10.png",
+    "description": "Floral handcrafted marble inlay work featuring intricate semi-precious stone craftsmanship.",
+    "price": "Contact for Price"
   }
 ];
